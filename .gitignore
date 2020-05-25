@@ -1,3 +1,4 @@
 db.conf
 db
 .DS_Store
+.vscode

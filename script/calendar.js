@@ -10,38 +10,28 @@ function filterDates(date) {
   loadChart();
   }
 
+  function parseDates(info){
+    var keys = Object.keys(info);
+    var cases = [];
+    var deaths = [];
 
-  function drawCalendar(json) {
-    // console.count("calendar");
-    // console.log(json);
-    var dataTable = new google.visualization.DataTable();
-    dataTable.addColumn({ type: "date", id: "Date" });
-    dataTable.addColumn({ type: "number", id: "Calls" });
-    var data = json ? convertToDates(json.dates.values): [
-          [new Date(2020, 3, 13), 37032],
-          [new Date(2020, 3, 14), 38024],
-          [new Date(2020, 3, 15), 38024],
-          [new Date(2020, 3, 16), 38108],
-          [new Date(2020, 3, 17), 38229],
-          [new Date(2020, 9, 4), 38177],
-          [new Date(2020, 9, 5), 38705],
-          [new Date(2020, 9, 12), 38210],
-          [new Date(2020, 9, 13), 38029],
-          [new Date(2020, 9, 19), 38823],
-          [new Date(2020, 9, 23), 38345],
-          [new Date(2020, 9, 24), 38436],
-          [new Date(2020, 9, 30), 38447],
-        ];
-    dataTable.addRows(data);
+    keys.forEach(function (key){
+      if (info[key].cases!=0) cases.push([new Date(key), info[key].cases])
+      if (info[key].deaths !=0) deaths.push([new Date(key), info[key].deaths])
+    })
+    drawCalendar(deaths, "calendarDeaths", "Cases")
+    drawCalendar(cases, "calendarCases", "Cases")
+  }
+
   
-    var chart = new google.visualization.Calendar(document.getElementById("calendar"));
   
+  function drawCalendar(data, div, param) {
     var options = {
-      title: "Gorilla Mouse Calls",
-      height: 200,
+      title: "Covid",
+      height: 800,
       width: 1000,
   allowHtml: true,
-
+  
       calendar: {
         focusedCellColor: {
           stroke: "#d3362d",
@@ -58,6 +48,15 @@ function filterDates(date) {
         },
       },
     };
+    // console.count("calendar");
+    // console.log(json);
+    var dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: "date", id: "Date" });
+    dataTable.addColumn({ type: "number", id: param });
+    dataTable.addRows(data);
+  
+    var chart = new google.visualization.Calendar(document.getElementById(div));
+  
   
     chart.draw(dataTable, options);
     google.visualization.events.addListener(chart, "select", function () {
@@ -83,7 +82,7 @@ function filterDates(date) {
     if (arr.length == 0) return null;
     for (var i = 0; i < arr.length; i++) {
       var date = new Date(arr[i][0]);
-      date.setDate(date.getDate()+1);
+      date.setDate(date.getDate());
       data[i] = [date, arr[i][1]];
     }
     // console.log("Dates:", data)

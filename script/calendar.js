@@ -27,7 +27,7 @@ function filterDates(date) {
   
   function drawCalendar(data, div, param) {
     var options = {
-      title: "Covid",
+      // title: "Covid",
       height: 800,
       width: 1000,
   allowHtml: true,

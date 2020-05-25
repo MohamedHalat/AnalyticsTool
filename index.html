@@ -18,10 +18,10 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
         <!-- Scripts -->
-        <script src="script/script.js"></script>
-        <script src="script/sankey.js"></script>
-        <script src="script/table.js"></script>
-        <script src="script/calendar.js"></script>
+        <script defer src="script/script.js"></script>
+        <script defer src="script/sankey.js"></script>
+        <script defer src="script/table.js"></script>
+        <script defer src="script/calendar.js"></script>
 
         <!-- AnyChart API -->
         <script src="https://cdn.anychart.com/releases/v8/js/anychart-core.min.js"></script>
@@ -74,20 +74,20 @@
 
                 <section class="card">
                     <div class="card-body">
-                        <h3>Intents</h3>
+                        <h3>Deaths</h3>
                         <ul class="flex-container" style="width: 100%;margin-top:-45px;">
                             <li class="flex-item">
-                                <div id="pieChart"></div>
+                                <div id="pieChartDeaths"></div>
                                 <div id="table" style="display: none;"></div>
                             </li>
                             <li class="flex-item" style="flex-grow: 4;">
-                                <div id="barChart"></div>
+                                <div id="barChartDeaths"></div>
                             </li>
                         </ul>
                     </div>
                     <footer class="card-footer">
                         <div class="card-footer-content">
-                            <h5 class="total" id="pieTotal"></h5>
+                            <h5 class="total" id="pieTotalDeaths"></h5>
                             <button style="display: contents;"  onclick="resetChartFilter()">
                                 <h5 style="margin-left:20px;"class="total">Reset Chart</h5>
                             </button>
@@ -97,18 +97,24 @@
 
                 <section class="card">
                     <div class="card-body">
-                        <h3>Sankey</h3>
-                        <div id="sankey_basic"></div>
+                        <h3>Cases</h3>
+                        <ul class="flex-container" style="width: 100%;margin-top:-45px;">
+                            <li class="flex-item">
+                                <div id="pieChartCases"></div>
+                                <div id="table" style="display: none;"></div>
+                            </li>
+                            <li class="flex-item" style="flex-grow: 4;">
+                                <div id="barChartCases"></div>
+                            </li>
+                        </ul>
                     </div>
                     <footer class="card-footer">
                         <div class="card-footer-content">
-                        <h5 class="total" id="sankeyTotal"></h5>
-                        <h5 class="total" id="sankeyTotalNodes"></h5>
-                            <button style="display: contents;"  onclick="show()">
-                                <h5 id="show" style="margin-left:20px;"class="total">Show All</h5>
+                            <h5 class="total" id="pieTotalCases"></h5>
+                            <button style="display: contents;"  onclick="resetChartFilter()">
+                                <h5 style="margin-left:20px;"class="total">Reset Chart</h5>
                             </button>
                         </div>
-                        <!-- Hide Move Edit -->
                     </footer>
                 </section>
             </div>
@@ -117,13 +123,13 @@
             <div class="column" style="float: right; width: 40%;background:#E1E1E1; min-height: 100%;">
                 <div style="padding: 5%;">
 
-                    <div>
+                    <!-- <div>
                         <h3>
                             Active Filter
                         </h3>
                         <div id="filter"></div>
                         <button onclick="resetFilter()">Reset</button>
-                    </div>
+                    </div> -->
 
                     <!-- Intents -->
                     <div>
@@ -139,29 +145,6 @@
                         <h5 class="total" id="numberOfLocations"></h5>
                     </div>
 
-                    <!-- Sessions -->
-                    <div>
-                        <h3>Sessions</h3>
-                        <div class="gtable"id="sessions">Data will appear here</div>
-                        <h5 class="total" id="numberOfSessions"></h5>
-                    </div>
-
-                    <!-- Users -->
-                    <div>
-                        <h3>Users</h3>
-                        <div class="gtable"id="users">Data will appear here</div>
-                        <h5 class="total" id="numberOfUsers"></h5>
-                    </div>
-
-                    <!-- JSON -->
-                    <div style="display: none;">
-                        <div class="table-header">JSON</div>
-                        <h3>Sankey</h3>
-                        <div raw-table="" class="data-table"
-                            data-ng-show="dataView=='table'">
-                            <div id="tables">Data will appear here</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

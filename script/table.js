@@ -267,6 +267,41 @@ drawCovidTable(rows);
 parseLocation(locations);
 }
 
+
+function drawCovidPie(info, param) {
+  var data = new google.visualization.DataTable();
+  var total = 0;
+  info.forEach(function (value) {
+    total += value[1];
+  })
+  document.getElementById(`pieTotal${param}`).innerHTML = "Total: " + total;
+  data.addColumn('string', 'Country');
+  data.addColumn('number', param);
+  data.addRows(info);
+
+  // Set options for pie chart.
+  var options = {
+    // title: 'User Intents',
+    width: 400,
+    height: 300
+  };
+
+  // Instantiate and draw the chart for Sarah's pizza.
+  var chart = new google.visualization.PieChart(document.getElementById(`pieChart${param}`));
+
+  chart.draw(data, options);
+
+  var barchart_options = {
+    // title: 'User Intents',
+    width: 400,
+    height: 300,
+    legend: 'none'
+  };
+  var barchart = new google.visualization.BarChart(document.getElementById(`barChart${param}`));
+  barchart.draw(data, barchart_options);
+}
+
+
 function drawCovidTable(rows){
   // console.log(info)
   var data = new google.visualization.DataTable();
@@ -288,10 +323,15 @@ function drawCovidTable(rows){
 function parseLocation(info){
   var keys = Object.keys(info);
   var data = [];
-
+  var deaths = [];
+  var cases = [];
   keys.forEach(function (key){
     if (info[key].cases!=0) data.push([key.replace(/_/g, " "), info[key].cases, info[key].deaths])
+    if (info[key].cases!=0) cases.push([key.replace(/_/g, " "), info[key].cases])
+    if (info[key].deaths!=0) deaths.push([key.replace(/_/g, " "), info[key].deaths])
   })
+  drawCovidPie(deaths, "Deaths");
+  drawCovidPie(cases, "Cases");
   drawLocationsTable(data)
 }
 

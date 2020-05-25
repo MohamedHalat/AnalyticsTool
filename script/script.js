@@ -48,8 +48,8 @@ function init() {
 }
 
 function loaded(id) {
-  getJSON(id, "all", "JSON");
-  getJSON(id, "dates", "JSON");
+  getJSON();
+  // getJSON(id, "dates", "JSON");
 }
 
 function filter(param, value) {
@@ -128,46 +128,32 @@ function sentenceCase(str) {
   return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 
-function getJSON(id, table, func) {
+function getJSON() {
   var xhttp;
   var json;
-  if (id == "") {
-    document.getElementById("tables").innerHTML = "No ID";
-    return;
-  }
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      // console.log(this);
-      // console.log(this.responseText);
-
-      if (func == "JSON") {
         document.getElementById("tables").innerHTML = this.responseText;
+        // console.log(this.responseText)
         json = JSON.parse(this.responseText);
+
         // console.log(json);
-      }
-      if (func != "JSON") {
-        document.getElementById(func).innerHTML = this.responseText;
-      } else if (table == "all") {
-        document.getElementById("numberOfUsers").innerHTML = "Users: " + json.users.length + "</br>";
-        document.getElementById("numberOfIntents").innerHTML = "Intents: " + json.intents.length + "</br>";
-        document.getElementById("numberOfSessions").innerHTML = "Sessions: " + json.sessions.length + "</br>";
-        sankeyJSON = json;
-        load(json);
-        drawTable("intents", convertJson(json.intents), Object.keys(json.intents.values[0]));
-        drawTable("sessions", convertJson(json.sessions), Object.keys(json.sessions.values[0]));
-        drawTable("users", convertJson(json.users), Object.keys(json.users.values[0]));
-        drawPieDiagram(json);
-        // wordChart(json);
-      } else if (table == "dates") {
-        calendarJSON = json;
-        // console.log(calendarJSON);
-        document.getElementById("numberOfDates").innerHTML = "Dates: " + json.dates.length + "</br>";
-        drawCalendar(json);
-      }
+        parseCovidandDraw(json);
+
+      // } else if (table == "all") {
+        // document.getElementById("numberOfUsers").innerHTML = "Users: " + json.users.length + "</br>";
+        // document.getElementById("numberOfIntents").innerHTML = "Intents: " + json.intents.length + "</br>";
+        // document.getElementById("numberOfSessions").innerHTML = "Sessions: " + json.sessions.length + "</br>";
+        // sankeyJSON = json;
+        // load(json);
+        // drawTable("intents", convertJson(json.intents), Object.keys(json.intents.values[0]));
+        // drawTable("sessions", convertJson(json.sessions), Object.keys(json.sessions.values[0]));
+        // drawTable("users", convertJson(json.users), Object.keys(json.users.values[0]));
+        // drawPieDiagram(json);
     }
   };
-  xhttp.open("GET", "index.php?id=" + id + "&func=" + func + "&table=" + table, true);
+  xhttp.open("GET", "index.php", true);
   xhttp.send();
   xhttp.onload = function () { };
 }

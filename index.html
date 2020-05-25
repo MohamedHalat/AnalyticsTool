@@ -50,12 +50,24 @@
             <div class="column" style="padding-top:60px;float: left;width:60%;">
                 <section class="card">
                     <div class="card-body">
-                        <h3>Dates</h3>
-                        <div id="calendar" style="width: 115%; height: 200px;"></div>
+                        <h3>Deaths</h3>
+                        <div id="calendarDeaths" style="width: 115%; height: 200px;"></div>
                     </div>
                     <footer class="card-footer">
                         <div class="card-footer-content">
-                            <h5 class="total" id="numberOfDates"></h4>
+                            <h5 class="total" id="numberOfDatesDeaths"></h4>
+                        </div>
+                    </footer>
+                </section>
+
+                <section class="card">
+                    <div class="card-body" style="height: 400px;">
+                        <h3>Cases</h3>
+                        <div id="calendarCases" style="width: 115%; height: 200px;"></div>
+                    </div>
+                    <footer class="card-footer">
+                        <div class="card-footer-content">
+                            <h5 class="total" id="numberOfDatesCases"></h4>
                         </div>
                     </footer>
                 </section>
@@ -115,9 +127,16 @@
 
                     <!-- Intents -->
                     <div>
-                        <h3>Intents</h3>
-                        <div class="gtable"id="intents">Data will appear here</div>
-                        <h5 class="total" id="numberOfIntents"></h5>
+                        <h3>Covid Table</h3>
+                        <div class="gtable"id="covidTable">Data will appear here</div>
+                        <h5 class="total" id="numberOfCovidTable"></h5>
+                    </div>
+
+                    <!-- Intents -->
+                    <div>
+                        <h3>Locations</h3>
+                        <div class="gtable"id="locationsTable">Data will appear here</div>
+                        <h5 class="total" id="numberOfLocations"></h5>
                     </div>
 
                     <!-- Sessions -->

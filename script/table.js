@@ -240,6 +240,75 @@ function drawPieDiagram(json) {
 google.charts.load("current", { packages: ["sankey", "calendar", "table","corechart"] });
 google.charts.setOnLoadCallback(drawTable);
 
+function parseCovidandDraw(info){
+  var rows = [];
+  var deaths = [];
+  var cases = []
+  var geoRows = [];
+  var dates = {};
+  var locations = {};
+
+
+  info.forEach(function (value){
+    rows.push([value.date.value, value.countries_and_territories.replace(/_/g, " "), value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
+        if (dates[value.date.value] == undefined) {
+          dates[value.date.value] = {"cases":value.daily_confirmed_cases, "deaths": value.daily_deaths}
+        }
+        else {
+        dates[value.date.value].cases+= value.daily_confirmed_cases;
+        dates[value.date.value].deaths+= value.daily_deaths;
+      }
+        if (value.deaths != 0 || value.confirmed_cases !=0) locations[value.countries_and_territories] = {"deaths": value.deaths, "cases": value.confirmed_cases}
+  })
+// console.log(dates);
+// console.log(locations);
+parseDates(dates);
+drawCovidTable(rows);
+parseLocation(locations);
+}
+
+function drawCovidTable(rows){
+  // console.log(info)
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Date');
+  data.addColumn('string', 'Countries and territories');
+  data.addColumn('number', 'Daily Confirmed Cases');
+  data.addColumn('number', 'Daily Deaths');
+  data.addColumn('number', 'Confirmed Cases');
+  data.addColumn('number', 'Deaths');
+
+  console.log(rows)
+  document.getElementById("numberOfCovidTable").innerHTML = `Total Rows: ${rows.length}`;
+  data.addRows(rows);
+  var table = new google.visualization.Table(document.getElementById("covidTable"));
+  table.draw(data, tableOptions);
+}
+
+
+function parseLocation(info){
+  var keys = Object.keys(info);
+  var data = [];
+
+  keys.forEach(function (key){
+    if (info[key].cases!=0) data.push([key.replace(/_/g, " "), info[key].cases, info[key].deaths])
+  })
+  drawLocationsTable(data)
+}
+
+function drawLocationsTable(rows){
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Countries and territories');
+  data.addColumn('number', 'Confirmed Cases');
+  data.addColumn('number', 'Deaths');
+
+  console.log(rows)
+  document.getElementById("numberOfLocations").innerHTML = `Total Rows: ${rows.length}`;
+  data.addRows(rows);
+  var table = new google.visualization.Table(document.getElementById("locationsTable"));
+  table.draw(data, tableOptions);
+}
+
+
 // Tables
 function drawTable(div, info, keys) {
   info = info || [

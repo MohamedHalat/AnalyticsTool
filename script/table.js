@@ -12,7 +12,7 @@ var tableOptions = {
 
 
 // Charts
-google.charts.load("current", { packages: ["calendar", "table", "corechart", "geochart"] });
+google.charts.load("current", { packages: ["calendar", "table", "corechart", "geochart"], 'mapsApiKey': 'AIzaSyBVNqmTmZPPK-jqWzgZ4nToRGtdAF6GiH0' });
 
 /* Data Parse into visualizable info, calls draw functions
 * @param info json version of bigquery covid dataset

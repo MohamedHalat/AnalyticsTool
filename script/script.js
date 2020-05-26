@@ -36,8 +36,7 @@ function show() {
 }
 
 function init() {
-  google.charts.load("current", { packages: ["calendar", "table", "corechart", "geochart"] });
-  getJSON("all");
+  getJSON();
   printFilter();
 }
 

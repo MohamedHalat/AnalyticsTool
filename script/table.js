@@ -31,7 +31,7 @@ function parseCovidandDraw(info) {
     if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
     if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
     // Add row info to dataset
-    rows.push([value.date.value, value.countries_and_territories.replace(/_/g, " "), value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
+    rows.push([value.date.value, value.countries_and_territories.replace(/_/g, " "), value.country_territory_code,  value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
     if (dates[value.date.value] == undefined) {
       dates[value.date.value] = { "cases": value.daily_confirmed_cases, "deaths": value.daily_deaths }
     }
@@ -39,7 +39,7 @@ function parseCovidandDraw(info) {
       dates[value.date.value].cases += value.daily_confirmed_cases;
       dates[value.date.value].deaths += value.daily_deaths;
     }
-    if (value.deaths != 0 || value.confirmed_cases != 0) locations[value.countries_and_territories] = { "deaths": value.deaths, "cases": value.confirmed_cases }
+    if (value.deaths != 0 || value.confirmed_cases != 0) locations[value.countries_and_territories] = { "deaths": value.deaths, "code":value.country_territory_code, "cases": value.confirmed_cases }
   })
   // Draw data
 
@@ -87,6 +87,7 @@ function drawCovidTable(rows) {
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Date');
   data.addColumn('string', 'Countries and territories');
+  data.addColumn('string', 'Country Code');
   data.addColumn('number', 'Daily Confirmed Cases');
   data.addColumn('number', 'Daily Deaths');
   data.addColumn('number', 'Confirmed Cases');
@@ -106,9 +107,9 @@ function parseLocation(info) {
   var deaths = [];
   var cases = [];
   keys.forEach(function (key) {
-    if (info[key].cases != 0) data.push([key.replace(/_/g, " "), info[key].cases, info[key].deaths])
+    if (info[key].cases != 0) data.push([key.replace(/_/g, " "), info[key].code, info[key].cases, info[key].deaths])
     if (info[key].cases != 0) cases.push([key.replace(/_/g, " "), info[key].cases])
-    if (info[key].deaths != 0) deaths.push([key.replace(/_/g, " "), info[key].deaths])
+    if (info[key].deaths != 0) deaths.push([info[key].code, info[key].deaths])
   })
   drawCovidPie(deaths, "Deaths");
   drawCovidPie(cases, "Cases");
@@ -119,6 +120,7 @@ function parseLocation(info) {
 function drawLocationsTable(rows) {
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Countries and territories');
+  data.addColumn('string', 'Location');
   data.addColumn('number', 'Confirmed Cases');
   data.addColumn('number', 'Deaths');
 

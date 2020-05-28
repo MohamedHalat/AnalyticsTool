@@ -129,6 +129,21 @@ function drawLocationsTable(rows) {
   data.addRows(rows);
   var table = new google.visualization.Table(document.getElementById("locationsTable"));
   table.draw(data, tableOptions);
+  drawSeriesChart(data);
+}
+
+function drawSeriesChart(data) {
+  var options = {
+    width: 400,
+    height: 300,
+    title: 'Correlation between life expectancy, fertility rate ' +
+           'and population of some world countries (2010)',
+    hAxis: {title: 'Confirmed Cases'},
+    vAxis: {title: 'Deaths'},
+    bubble: {textStyle: {fontSize: 11}}      };
+
+  var chart = new google.visualization.BubbleChart(document.getElementById('locationsBubbleChart'));
+  chart.draw(data, options);
 }
 
 function drawRegionsMap(info) {

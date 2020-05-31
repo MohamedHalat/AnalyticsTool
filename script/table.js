@@ -31,11 +31,12 @@ function parseCovidandDraw(info) {
     if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
     if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
     // Add row info to dataset
+    // if (activeFilter.locations.includes(value.countries_and_territories)) console.error(value.countries_and_territories);
     rows.push([value.date.value, value.countries_and_territories.replace(/_/g, " "), value.country_territory_code,  value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
-    if (dates[value.date.value] == undefined) {
+    if (dates[value.date.value] == undefined && (activeFilter.locations.includes(value.countries_and_territories) || activeFilter.locations.length == 0)) {
       dates[value.date.value] = { "cases": value.daily_confirmed_cases, "deaths": value.daily_deaths }
     }
-    else {
+    else if ((activeFilter.locations.includes(value.countries_and_territories) || activeFilter.locations.length == 0)) {
       dates[value.date.value].cases += value.daily_confirmed_cases;
       dates[value.date.value].deaths += value.daily_deaths;
     }
@@ -130,6 +131,17 @@ function drawLocationsTable(rows) {
   var table = new google.visualization.Table(document.getElementById("locationsTable"));
   table.draw(data, tableOptions);
   drawSeriesChart(data);
+  google.visualization.events.addListener(table, "select", function () {
+    var sel = table.getSelection();
+    if (sel.length) {
+      if (typeof sel[0].row !== "undefined") {
+        filter("locations", data.getValue(sel[0].row, 0));
+        parseCovidandDraw(covidData)
+        // console.log(data.getValue(sel[0].row, 0))
+        // console.log(sel[0])
+      }
+    }
+  });
 }
 
 function drawSeriesChart(data) {
@@ -161,6 +173,18 @@ function drawRegionsMap(info) {
   var chart = new google.visualization.GeoChart(document.getElementById('locationsChart'));
 
   chart.draw(data, options);
+  google.visualization.events.addListener(chart, "select", function () {
+    var sel = chart.getSelection();
+    if (sel.length) {
+      if (typeof sel[0].row !== "undefined") {
+        // filter("locations", sel[0]);
+        filter("locations", data.getValue(sel[0].row, 0));
+        parseCovidandDraw(covidData)
+        // console.log(sel[0])
+        // console.log(data.getValue(sel[0].row, 0))
+      }
+    }
+  });
 }
 
 function showSelect(div, filter, cell) {

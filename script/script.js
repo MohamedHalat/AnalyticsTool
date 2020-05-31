@@ -1,5 +1,6 @@
 var selectedNode = null;
 var active = [];
+var covidData = {};
 var unselect = false;
 var showAll = false;
 var activeFilter = {
@@ -65,6 +66,12 @@ function resetFilter() {
   getJSON();
 }
 
+function filterDates(date) {
+  date = new Date(date);
+  var str = date.getFullYear() +" "+ date.getMonth() +" "+ date.getDate();
+  filter("date",str);
+}
+
 function resetDatesFilter() {
   activeFilter.dates = [];
   printFilter();
@@ -113,6 +120,7 @@ function getJSON() {
     if (this.readyState == 4 && this.status == 200) {
         json = JSON.parse(this.responseText);
         // console.log(json);
+        covidData = json;
         parseCovidandDraw(json);
     }
   };

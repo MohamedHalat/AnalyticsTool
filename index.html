@@ -82,7 +82,7 @@
                         </div>
                     </footer>
                 </section>
-                
+
                 <section class="card">
                     <div class="card-body">
                         <h3>Cases Line</h3>
@@ -118,28 +118,7 @@
                     </footer>
                 </section>
 
-                <section class="card">
-                    <div class="card-body">
-                        <h3>Cases Pie</h3>
-                        <ul class="flex-container" style="width: 100%;margin-top:-45px;">
-                            <li class="flex-item">
-                                <div id="pieChartCases"></div>
-                                <div id="table" style="display: none;"></div>
-                            </li>
-                            <li class="flex-item" style="flex-grow: 4;">
-                                <div id="barChartCases"></div>
-                            </li>
-                        </ul>
-                    </div>
-                    <footer class="card-footer">
-                        <div class="card-footer-content">
-                            <h5 class="total" id="pieTotalCases"></h5>
-                            <button style="display: contents;"  onclick="resetChartFilter()">
-                                <h5 style="margin-left:20px;"class="total">Reset Chart</h5>
-                            </button>
-                        </div>
-                    </footer>
-                </section>
+
             </div>
 
             <!-- Right Column -->
@@ -169,13 +148,28 @@
                         <div id="locationsChart">Data will appear here</div>
                     </div>
                     
-                    <div>
-                        <h3>Locations</h3>
-                        <div class="gtable"id="locationsBubbleChart">Data will appear here</div>
-                        <h5 class="total" id="numberOfLocations"></h5>
-                        <!-- <div id="locationsBubbleChart">Data will appear here</div> -->
-                    </div>
-                    
+                    <section class="card">
+                        <div class="card-body">
+                            <h3>Cases Pie</h3>
+                            <ul class="flex-container" style="width: 100%;margin-top:-45px;">
+                                <li class="flex-item">
+                                    <div id="pieChartCases"></div>
+                                    <div id="table" style="display: none;"></div>
+                                </li>
+                                <li class="flex-item" style="flex-grow: 4;">
+                                    <div id="barChartCases"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <footer class="card-footer">
+                            <div class="card-footer-content">
+                                <h5 class="total" id="pieTotalCases"></h5>
+                                <button style="display: contents;"  onclick="resetChartFilter()">
+                                    <h5 style="margin-left:20px;"class="total">Reset Chart</h5>
+                                </button>
+                            </div>
+                        </footer>
+                    </section>
                 </div>
             </div>
         </div>

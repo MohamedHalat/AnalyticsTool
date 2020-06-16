@@ -8,11 +8,30 @@ function parseDates(info) {
     if (info[key].cases != 0) cases.push([new Date(key), info[key].cases])
     if (info[key].deaths != 0) deaths.push([new Date(key), info[key].deaths])
   })
-  drawCalendar(deaths, "calendarDeaths", "Cases")
+  drawCalendar(deaths, "calendarDeaths", "Deaths")
   drawCalendar(cases, "calendarCases", "Cases")
+  drawLine(cases, 'lineCases', "Cases")
+  drawLine(deaths, 'lineDeaths', "Deaths")
 }
 
+function drawLine(data, div, param){
+  var dataTable = new google.visualization.DataTable();
+  dataTable.addColumn('date', 'Date');
+  dataTable.addColumn('number', param);
+  dataTable.addRows(data);
 
+  var options = {
+    hAxis: {
+      title: 'Date'
+    },
+    vAxis: {
+      title: param
+    }
+  };
+
+  var chart = new google.visualization.LineChart(document.getElementById(div));
+  chart.draw(dataTable, options);
+}
 
 function drawCalendar(data, div, param) {
   var options = {

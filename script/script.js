@@ -37,6 +37,8 @@ function show() {
 }
 
 function init() {
+  console.log(getCookie("filter"))
+  if (getCookie("filter")) activeFilter = JSON.parse(getCookie("filter"));
   getJSON();
   printFilter();
 }
@@ -68,8 +70,8 @@ function resetFilter() {
 
 function filterDates(date) {
   date = new Date(date);
-  var str = date.getFullYear() +" "+ date.getMonth() +" "+ date.getDate();
-  filter("date",str);
+  var str = date.getFullYear() + " " + date.getMonth() + " " + date.getDate();
+  filter("date", str);
 }
 
 function resetDatesFilter() {
@@ -101,6 +103,7 @@ function printFilter() {
     str += `${sentenceCase(value)}: ${activeFilter[value].toString()}</br>`;
   })
   document.getElementById('filter').innerHTML = str.toString();
+  setCookie("filter",JSON.stringify(activeFilter),10)
 }
 
 function sentenceCase(str) {
@@ -127,4 +130,28 @@ function getJSON() {
   xhttp.open("GET", "index.php", true);
   xhttp.send();
   xhttp.onload = function () { };
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }

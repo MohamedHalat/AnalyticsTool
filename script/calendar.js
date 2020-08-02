@@ -86,23 +86,3 @@ function drawCalendar(data, div, param) {
     }
   });
 }
-
-
-// Helper Functions
-function format(num) {
-  num = num.toString()
-  if (num.length < 2) return 0 + num;
-  return num
-}
-
-function convertToDates(arr) {
-  var data = [];
-  if (arr.length == 0) return null;
-  for (var i = 0; i < arr.length; i++) {
-    var date = new Date(arr[i][0]);
-    date.setDate(date.getDate());
-    data[i] = [date, arr[i][1]];
-  }
-  // console.log("Dates:", data)
-  return data;
-}

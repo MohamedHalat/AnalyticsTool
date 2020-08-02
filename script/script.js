@@ -9,41 +9,7 @@ var activeFilter = {
   chart: []
 }
 
-function showAll() {
-  console.log(showAll)
-  if (showAll) {
-    showAll = false;
-    document.getElementById("show").innerHTML = "Show All"
-  }
-  else {
-    showAll = true;
-    document.getElementById("show").innerHTML = "Show Start"
-  }
-  load(sankeyJSON);
-
-}
-
-function show() {
-  // console.log(showAll)
-  if (showAll) {
-    showAll = false;
-    document.getElementById("show").innerHTML = "Show All"
-  }
-  else {
-    showAll = true;
-    document.getElementById("show").innerHTML = "Show Start"
-  }
-  load(sankeyJSON);
-}
-
-function init() {
-  console.log(getCookie("filter"))
-  if (getCookie("filter")) activeFilter = JSON.parse(getCookie("filter"));
-  getDatesJSON();
-  getCovidJSON();
-  printFilter();
-}
-
+// Filters
 function filter(param, value) {
   if (!activeFilter[param].includes(value))
     activeFilter[param].push(value);
@@ -74,12 +40,6 @@ function resetFilter() {
   getCovidJSON();
 }
 
-function filterDates(date) {
-  date = new Date(date);
-  var str = date.getFullYear() + " " + date.getMonth() + " " + date.getDate();
-  filter("date", str);
-}
-
 function resetDatesFilter() {
   activeFilter.dates = [];
   printFilter();
@@ -94,13 +54,6 @@ function resetChartFilter() {
   activeFilter.chart = [];
   printFilter();
 }
-
-document.addEventListener('readystatechange', function () {
-  if (document.readyState === "complete") {
-    init();
-  }
-});
-
 
 function printFilter() {
   var keys = Object.keys(activeFilter);
@@ -121,6 +74,7 @@ function sentenceCase(str) {
   return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 
+// Requests
 function getDatesJSON() {
   var xhttp;
   var json;
@@ -165,13 +119,13 @@ function getCovidJSON() {
   xhttp.onload = function () { };
 }
 
+// Cookies
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
   var expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
-
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -188,3 +142,18 @@ function getCookie(cname) {
   }
   return "";
 }
+
+function init() {
+  console.log(getCookie("filter"))
+  if (getCookie("filter")) activeFilter = JSON.parse(getCookie("filter"));
+  getDatesJSON();
+  getCovidJSON();
+  printFilter();
+}
+
+
+document.addEventListener('readystatechange', function () {
+  if (document.readyState === "complete") {
+    init();
+  }
+});

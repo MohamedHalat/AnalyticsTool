@@ -4,9 +4,11 @@ function parseDates(info) {
   var cases = [];
   var deaths = [];
 
-  keys.forEach(function (key) {
-    if (info[key].cases != 0) cases.push([new Date(key), info[key].cases])
-    if (info[key].deaths != 0) deaths.push([new Date(key), info[key].deaths])
+  info.forEach(function (key) {
+    if (key.daily_confirmed_cases != 0)
+     cases.push([new Date(key.date.value), key.daily_confirmed_cases])
+    if (key.daily_deaths != 0)
+     deaths.push([new Date(key.date.value), key.daily_deaths])
   })
   drawCalendar(deaths, "calendarDeaths", "Deaths")
   drawCalendar(cases, "calendarCases", "Cases")

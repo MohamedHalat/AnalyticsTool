@@ -39,7 +39,8 @@ function show() {
 function init() {
   console.log(getCookie("filter"))
   if (getCookie("filter")) activeFilter = JSON.parse(getCookie("filter"));
-  getJSON();
+  getDatesJSON();
+  getCovidJSON();
   printFilter();
 }
 
@@ -65,7 +66,8 @@ function resetFilter() {
     activeFilter[value] = [];
   })
   printFilter();
-  getJSON();
+  getDatesJSON();
+  getCovidJSON()();
 }
 
 function filterDates(date) {
@@ -115,20 +117,36 @@ function sentenceCase(str) {
   return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 
-function getJSON() {
+function getDatesJSON() {
   var xhttp;
   var json;
   xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         json = JSON.parse(this.responseText);
-        // console.log(json);
-        covidData = json;
-        parseCovidandDraw(json);
+        console.log("getDatesJSON",json)
+        parseDates(json)
     }
   };
-  xhttp.open("GET", "index.php", true);
+  xhttp.open("GET", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
   xhttp.send();
+  xhttp.onload = function () { };
+}
+
+function getCovidJSON() {
+  var xhttp;
+  var json;
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        json = JSON.parse(this.responseText);
+        console.log("getCovidJSON",json)
+        parseCovid(json)
+    }
+  };
+  xhttp.open("POST", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  xhttp.send(JSON.stringify({"func":true}));
   xhttp.onload = function () { };
 }
 

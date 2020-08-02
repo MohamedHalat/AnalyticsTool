@@ -19,9 +19,6 @@ google.charts.load("current", { packages: ["calendar", "table", "corechart", "ge
 */
 function parseCovidandDraw(info) {
   var rows = [];
-  var deaths = [];
-  var cases = []
-  var geoRows = [];
   var dates = {};
   var locations = {};
 
@@ -49,6 +46,51 @@ function parseCovidandDraw(info) {
   parseLocation(locations);
 }
 
+function parseCovid(info){
+  var rows = [];
+  var deaths = [];
+  var locations = {};
+
+  var data = [];
+  var cases = [];
+
+  info.forEach(function (value) {
+    value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
+    if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
+    if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
+
+    if (value.cases != 0) data.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code, value.cases, value.deaths])
+    if (value.cases != 0) cases.push([value.countries_and_territories.replace(/_/g, " "), value.cases])
+    if (value.deaths != 0) deaths.push([value.country_territory_code, value.deaths])
+  })
+  console.log({info,data,cases,deaths})
+  drawCovidPie(deaths, "Deaths");
+  drawCovidPie(cases, "Cases");
+  drawRegionsMap(cases);
+  // drawLocationsTable(data)
+
+
+  // info.forEach(function (value) {
+  //   // Filter
+  //   value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
+  //   if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
+  //   if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
+  //   // Add row info to dataset
+  //   // if (activeFilter.locations.includes(value.countries_and_territories)) console.error(value.countries_and_territories);
+  //   rows.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code,  value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
+  //   if (dates[value.date.value] == undefined && (activeFilter.locations.includes(value.countries_and_territories) || activeFilter.locations.length == 0)) {
+  //     dates[value.date.value] = { "cases": value.daily_confirmed_cases, "deaths": value.daily_deaths }
+  //   }
+  //   else if ((activeFilter.locations.includes(value.countries_and_territories) || activeFilter.locations.length == 0)) {
+  //     dates[value.date.value].cases += value.daily_confirmed_cases;
+  //     dates[value.date.value].deaths += value.daily_deaths;
+  //   }
+  //   if (value.deaths != 0 || value.confirmed_cases != 0) locations[value.countries_and_territories] = { "deaths": value.deaths, "code":value.country_territory_code, "cases": value.confirmed_cases }
+  // })
+
+  // drawCovidTable(rows);
+  // parseLocation(locations);
+}
 
 function drawCovidPie(info, param) {
   var data = new google.visualization.DataTable();

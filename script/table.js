@@ -58,37 +58,20 @@ function parseCovid(info){
     value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
     if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
     if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
-
+    locations[value.countries_and_territories] = value.country_territory_code;
     if (value.cases != 0) data.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code, value.cases, value.deaths])
     if (value.cases != 0) cases.push([value.countries_and_territories.replace(/_/g, " "), value.cases])
     if (value.deaths != 0) deaths.push([value.country_territory_code, value.deaths])
+    rows.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code,  value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
   })
-  console.log({info,data,cases,deaths})
+
+  // console.log({info,data,cases,deaths})
   drawCovidPie(deaths, "Deaths");
   drawCovidPie(cases, "Cases");
-  drawRegionsMap(cases);
+  drawRegionsMap(cases, locations);
   // drawLocationsTable(data)
 
-
-  // info.forEach(function (value) {
-  //   // Filter
-  //   value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
-  //   if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
-  //   if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
-  //   // Add row info to dataset
-  //   // if (activeFilter.locations.includes(value.countries_and_territories)) console.error(value.countries_and_territories);
-  //   rows.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code,  value.daily_confirmed_cases, value.daily_deaths, value.confirmed_cases, value.deaths])
-  //   if (dates[value.date.value] == undefined && (activeFilter.locations.includes(value.countries_and_territories) || activeFilter.locations.length == 0)) {
-  //     dates[value.date.value] = { "cases": value.daily_confirmed_cases, "deaths": value.daily_deaths }
-  //   }
-  //   else if ((activeFilter.locations.includes(value.countries_and_territories) || activeFilter.locations.length == 0)) {
-  //     dates[value.date.value].cases += value.daily_confirmed_cases;
-  //     dates[value.date.value].deaths += value.daily_deaths;
-  //   }
-  //   if (value.deaths != 0 || value.confirmed_cases != 0) locations[value.countries_and_territories] = { "deaths": value.deaths, "code":value.country_territory_code, "cases": value.confirmed_cases }
-  // })
-
-  // drawCovidTable(rows);
+  // drawCovidTable(data);
   // parseLocation(locations);
 }
 
@@ -200,7 +183,7 @@ function drawSeriesChart(data) {
   chart.draw(data, options);
 }
 
-function drawRegionsMap(info) {
+function drawRegionsMap(info, locations) {
   // var data = google.visualization.arrayToDataTable(info);
   var data = new google.visualization.DataTable();
   data.addColumn("string", "Country")
@@ -220,8 +203,8 @@ function drawRegionsMap(info) {
     if (sel.length) {
       if (typeof sel[0].row !== "undefined") {
         // filter("locations", sel[0]);
-        filter("locations", data.getValue(sel[0].row, 0));
-        parseCovidandDraw(covidData)
+        filter("locations", locations[data.getValue(sel[0].row, 0)]);
+        // parseCovidandDraw(covidData)
         // console.log(sel[0])
         // console.log(data.getValue(sel[0].row, 0))
       }

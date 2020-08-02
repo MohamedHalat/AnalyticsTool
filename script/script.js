@@ -50,6 +50,8 @@ function filter(param, value) {
   else
     remove(param, value);
   printFilter();
+  
+  getDatesJSON()
 }
 
 function remove(param, item) {
@@ -67,7 +69,7 @@ function resetFilter() {
   })
   printFilter();
   getDatesJSON();
-  getCovidJSON()();
+  getCovidJSON();
 }
 
 function filterDates(date) {
@@ -128,8 +130,15 @@ function getDatesJSON() {
         parseDates(json)
     }
   };
+  console.log(JSON.stringify({"countries":activeFilter.locations.toString()}))
+  if (activeFilter.locations){
+    xhttp.open("POST", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify({"countries":activeFilter.locations.toString()}));
+  }
+  else
   xhttp.open("GET", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
-  xhttp.send();
+
   xhttp.onload = function () { };
 }
 

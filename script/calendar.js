@@ -73,7 +73,10 @@ function drawCalendar(data, div, param) {
     var sel = chart.getSelection();
     if (sel.length) {
       if (typeof sel[0].row !== "undefined") {
-        filterDates(new Date(sel[0].date));
+        var date = new Date(sel[0].date)
+        // console.log()
+        filter("dates", `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+2}`)
+        // filterDates(`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`));
       }
     }
   });

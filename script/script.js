@@ -50,8 +50,10 @@ function filter(param, value) {
   else
     remove(param, value);
   printFilter();
-  
+  if (param == "locations")
   getDatesJSON()
+  if (param == "dates")
+  getCovidJSON()
 }
 
 function remove(param, item) {
@@ -155,7 +157,11 @@ function getCovidJSON() {
   };
   xhttp.open("POST", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
   xhttp.setRequestHeader("Content-Type", "application/json");
-  xhttp.send(JSON.stringify({"func":true}));
+  
+  var req = {"func":true};
+  if (activeFilter.dates) req.dates = activeFilter.dates.toString();
+
+  xhttp.send(JSON.stringify(req));
   xhttp.onload = function () { };
 }
 

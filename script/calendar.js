@@ -3,23 +3,26 @@ function parseDates(info) {
   var keys = Object.keys(info);
   var cases = [];
   var deaths = [];
+  var combo = [];
 
   info.forEach(function (key) {
-    if (key.daily_confirmed_cases != 0)
-     cases.push([new Date(key.date.value), key.daily_confirmed_cases])
-    if (key.daily_deaths != 0)
-     deaths.push([new Date(key.date.value), key.daily_deaths])
+    var date = new Date(key.date.value);
+    date.setDate(date.getDate()+1);
+    if (key.daily_confirmed_cases != 0) cases.push([date, key.daily_confirmed_cases])
+    if (key.daily_deaths != 0) deaths.push([date, key.daily_deaths])
+    if (key.daily_confirmed_cases != 0 || key.daily_deaths != 0) combo.push([date, key.daily_confirmed_cases, key.daily_deaths])
   })
+
   drawCalendar(deaths, "calendarDeaths", "Deaths")
   drawCalendar(cases, "calendarCases", "Cases")
-  drawLine(cases, 'lineCases', "Cases")
-  drawLine(deaths, 'lineDeaths', "Deaths")
+  drawLine(combo, 'lineCases', "Cases")
 }
 
 function drawLine(data, div, param){
   var dataTable = new google.visualization.DataTable();
   dataTable.addColumn('date', 'Date');
-  dataTable.addColumn('number', param);
+  dataTable.addColumn('number', "Cases");
+  dataTable.addColumn('number', "Deaths");
   dataTable.addRows(data);
 
   var options = {
@@ -27,7 +30,7 @@ function drawLine(data, div, param){
       title: 'Date'
     },
     vAxis: {
-      title: param
+      title: "Covid"
     }
   };
 
@@ -73,10 +76,12 @@ function drawCalendar(data, div, param) {
     var sel = chart.getSelection();
     if (sel.length) {
       if (typeof sel[0].row !== "undefined") {
-        var date = new Date(sel[0].date)
-        // console.log()
-        filter("dates", `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+2}`)
-        // filterDates(`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`));
+        var date = new Date(sel[0].date);
+        date.setDate(date.getDate()+1);
+        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
+        filter("dates", `${date.toLocaleDateString(undefined, options)}`)
+
       }
     }
   });

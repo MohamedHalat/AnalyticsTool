@@ -44,14 +44,18 @@ function drawCovidPie(info, param) {
   var total = 0;
   data.addColumn('string', 'Country');
   data.addColumn('number', param);
-  data.addRows(info);
+  info.sort((a,b) => b[1]-a[1])
+  data.addRows(info.slice(0,20));
 
   // Set options for piechart and draw
   var options = {
     width: 400,
-    height: 300
+    height: 300,
+    page: 'enable',
+    pageSize: 10
   };
   var chart = new google.visualization.PieChart(document.getElementById(`pieChart${param}`));
+  data.sort([{column: 1,desc:true}])
   chart.draw(data, options);
 
   // Add total
@@ -62,7 +66,9 @@ function drawCovidPie(info, param) {
   var barchart_options = {
     width: 400,
     height: 300,
-    legend: 'none'
+    legend: 'none',        
+    page: 'enable',
+    pageSize: 10
   };
   var barchart = new google.visualization.BarChart(document.getElementById(`barChart${param}`));
   barchart.draw(data, barchart_options);

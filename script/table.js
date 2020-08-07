@@ -15,7 +15,10 @@ function parseCovid(info) {
   info.forEach(function (value) {
     // Replace certain country names
     value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
-    if (value.countries_and_territories == "Cases on an international conveyance Japan") value.countries_and_territories = "Japan"
+    if (value.countries_and_territories == "Cases on an international conveyance Japan") {
+      value.countries_and_territories = "Japan"
+      value.country_territory_code = "JAP"
+    }
     if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
     // Pie, bar and regional chart data
     if (value.cases != 0) cases.push([value.countries_and_territories.replace(/_/g, " "), value.daily_confirmed_cases])
@@ -44,8 +47,8 @@ function drawCovidPie(info, param) {
   var total = 0;
   data.addColumn('string', 'Country');
   data.addColumn('number', param);
-  info.sort((a,b) => b[1]-a[1])
-  data.addRows(info.slice(0,20));
+  info.sort((a, b) => b[1] - a[1])
+  data.addRows(info.slice(0, 20));
 
   // Set options for piechart and draw
   var options = {
@@ -55,7 +58,7 @@ function drawCovidPie(info, param) {
     pageSize: 10
   };
   var chart = new google.visualization.PieChart(document.getElementById(`pieChart${param}`));
-  data.sort([{column: 1,desc:true}])
+  data.sort([{ column: 1, desc: true }])
   chart.draw(data, options);
 
   // Add total
@@ -66,7 +69,7 @@ function drawCovidPie(info, param) {
   var barchart_options = {
     width: 400,
     height: 300,
-    legend: 'none',        
+    legend: 'none',
     page: 'enable',
     pageSize: 10
   };
@@ -136,7 +139,7 @@ function drawRegionsMap(info, locations) {
 
 // document.getElementById("pieButton").onclick = viewPieChart("pieCases")
 
-function viewPieChart(chart){
+function viewPieChart(chart) {
   var contents = document.getElementById("pieCharts");
   // console.log(contents);
   for (ele of contents.children) {
@@ -146,7 +149,7 @@ function viewPieChart(chart){
   }
 }
 
-function viewCalendarChart(chart){
+function viewCalendarChart(chart) {
   var contents = document.getElementById("calendarChart");
   console.log(contents);
   for (ele of contents.children) {

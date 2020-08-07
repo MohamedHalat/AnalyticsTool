@@ -123,7 +123,7 @@ function drawRegionsMap(info, locations) {
 
   // Create Chart
   var chart = new google.visualization.GeoChart(document.getElementById('locationsChart'));
-  chart.draw(data, { width: "100%", height: "300" });
+  chart.draw(data, { width: "100%", height: "500" });
 
   // Select event listener
   google.visualization.events.addListener(chart, "select", function () {
@@ -131,4 +131,28 @@ function drawRegionsMap(info, locations) {
     if (sel.length && typeof sel[0].row !== "undefined")
       filter("locations", locations[data.getValue(sel[0].row, 0)]);
   });
+}
+
+
+// document.getElementById("pieButton").onclick = viewPieChart("pieCases")
+
+function viewPieChart(chart){
+  var contents = document.getElementById("pieCharts");
+  // console.log(contents);
+  for (ele of contents.children) {
+    // console.log(ele.id)
+    if (ele.id == chart) ele.style.display = "contents"
+    else ele.style.display = "none"
+  }
+}
+
+function viewCalendarChart(chart){
+  var contents = document.getElementById("calendarChart");
+  console.log(contents);
+  for (ele of contents.children) {
+    // console.log(ele.id)
+    if (ele.id == chart) ele.style.display = "contents"
+    else ele.style.display = "none"
+  }
+
 }

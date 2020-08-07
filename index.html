@@ -47,26 +47,16 @@
         <div class="row">
             <!-- Left Column -->
             <div class="column" style="padding-top:60px;float: left;width:60%;">
+
+                
                 <section class="card">
                     <div class="card-body">
-                        <h3>Deaths Calendar</h3>
-                        <div id="calendarDeaths" style="width: 115%; height: 200px;"></div>
+                        <h3>Locations Cases</h3>
+                        <div id="locationsChart">Data will appear here</div>
                     </div>
                     <footer class="card-footer">
                         <div class="card-footer-content">
-                            <h5 class="total" id="numberOfDatesDeaths"></h4>
-                        </div>
-                    </footer>
-                </section>
-
-                <section class="card">
-                    <div class="card-body" style="height: 400px;">
-                        <h3>Cases Calendar</h3>
-                        <div id="calendarCases" style="width: 115%; height: 200px;"></div>
-                    </div>
-                    <footer class="card-footer">
-                        <div class="card-footer-content">
-                            <h5 class="total" id="numberOfDatesCases"></h4>
+                            <h5 class="total">Total: </h4>
                         </div>
                     </footer>
                 </section>
@@ -84,51 +74,61 @@
                 </section>
 
                 <section class="card">
-                    <div class="card-body">
-                        <h3>Deaths Pie</h3>
-                        <ul class="flex-container" style="width: 100%;margin-top:-45px;">
-                            <li class="flex-item">
-                                <div id="pieChartDeaths"></div>
-                                <div id="table" style="display: none;"></div>
-                            </li>
-                            <li class="flex-item" style="flex-grow: 4;">
-                                <div id="barChartDeaths"></div>
-                            </li>
-                        </ul>
+                    <div class="card-body" style="height: 420px;">
+                        <div id="calendarChart">
+                            <!-- <div id="deathsCalendar" style="display: contents;">
+                                <h3>Deaths</h3>
+                                <h5 class="total" id="numberOfDatesDeaths"></h4>
+                                <div id="calendarDeaths" style="width: 115%; height: 200px;"></div>
+                            </div> -->
+                            <div id="CasesCalendar" style="display: contents;">
+                                <h3>Cases</h3>
+                                <h5 class="total" id="numberOfDatesCases"></h4>
+                                <div id="calendarCases" style="width: 115%; height: 200px;"></div>
+                            </div>
+                        </div>
                     </div>
                     <footer class="card-footer">
                         <div class="card-footer-content">
-                            <h5 class="total" id="pieTotalDeaths"></h5>
-                            <button style="display: contents;"  onclick="resetChartFilter()">
-                                <h5 style="margin-left:20px;"class="total">Reset Chart</h5>
+                            <!-- <button style="display: contents;" id="pieButton"  onclick="viewCalendarChart('casesCalendar')">
+                                <h5 style="margin-left:20px;"class="total">Cases</h5>
                             </button>
+                            <button style="display: contents;"  onclick="viewCalendarChart('deathsCalendar')">
+                                <h5 style="margin-left:20px;"class="total">Deaths</h5>
+                            </button> -->
                         </div>
                     </footer>
                 </section>
 
                 <section class="card">
-                    <div class="card-body">
-                        <h3>Cases Pie</h3>
-                        <ul class="flex-container" style="width: 100%;margin-top:-45px;">
-                            <li class="flex-item">
-                                <div id="pieChartCases"></div>
-                                <div id="table" style="display: none;"></div>
-                            </li>
-                            <li class="flex-item" style="flex-grow: 4;">
-                                <div id="barChartCases"></div>
-                            </li>
-                        </ul>
+                    <div class="card-body" style="height: 400px;">
+                        <div id="calendarChart">
+                            <div id="deathsCalendar" style="display: contents;">
+                                <h3>Deaths</h3>
+                                <h5 class="total" id="numberOfDatesDeaths"></h4>
+                                <div id="calendarDeaths" style="width: 115%; height: 200px;"></div>
+                            </div>
+                            <!-- <div id="CasesCalendar" style="display: contents;">
+                                <h3>Cases</h3>
+                                <h5 class="total" id="numberOfDatesCases"></h4>
+                                <div id="calendarCases" style="width: 115%; height: 200px;"></div>
+                            </div> -->
+                        </div>
                     </div>
                     <footer class="card-footer">
                         <div class="card-footer-content">
-                            <h5 class="total" id="pieTotalCases"></h5>
-                            <button style="display: contents;"  onclick="resetChartFilter()">
-                                <h5 style="margin-left:20px;"class="total">Reset Chart</h5>
+                            <!-- <button style="display: contents;" id="pieButton"  onclick="viewCalendarChart('casesCalendar')">
+                                <h5 style="margin-left:20px;"class="total">Cases</h5>
                             </button>
+                            <button style="display: contents;"  onclick="viewCalendarChart('deathsCalendar')">
+                                <h5 style="margin-left:20px;"class="total">Deaths</h5>
+                            </button> -->
                         </div>
                     </footer>
                 </section>
 
+
+               
             </div>
 
             <!-- Right Column -->
@@ -155,10 +155,58 @@
                         <h3>Locations</h3>
                         <div class="gtable"id="locationsTable">Data will appear here</div>
                         <h5 class="total" id="numberOfLocations"></h5>
-                        <div id="locationsChart">Data will appear here</div>
                     </div>
                     
 
+                    <section class="card">
+                        <div class="card-body" id="pieCharts">
+                            <div id="pieDeaths" style="display: none;">
+                                <div>
+                                    <h3>Deaths</h3>
+                                    <h5 class="total" id="pieTotalDeaths"></h5>
+                                </div>
+                            <div>
+                                <ul class="flex-container" style="width: 100%;margin-top:-45px;">
+                                    <li class="flex-item">
+                                        <div id="pieChartDeaths"></div>
+                                        <div id="table" style="display: none;"></div>
+                                    </li>
+                                    <li class="flex-item" style="flex-grow: 4;">
+                                        <div id="barChartDeaths"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="pieCases">
+                            <div>
+                                <h3>Cases</h3>
+                                <h5 class="total" id="pieTotalCases"></h5>
+                            </div>
+                            <div>
+
+                                <ul class="flex-container" style="width: 100%;margin-top:-45px;">
+                                    <li class="flex-item">
+                                        <div id="pieChartCases"></div>
+                                        <div id="table" style="display: none;"></div>
+                                    </li>
+                                    <li class="flex-item" style="flex-grow: 4;">
+                                        <div id="barChartCases"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                        <footer class="card-footer">
+                            <div class="card-footer-content">
+                                <button style="display: contents;" id="pieButton"  onclick="viewPieChart('pieCases')">
+                                    <h5 style="margin-left:20px;"class="total">Cases</h5>
+                                </button>
+                                <button style="display: contents;"  onclick="viewPieChart('pieDeaths')">
+                                    <h5 style="margin-left:20px;"class="total">Deaths</h5>
+                                </button>
+                            </div>
+                        </footer>
+                    </section>
                 </div>
             </div>
         </div>

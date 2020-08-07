@@ -13,9 +13,9 @@ function parseDates(info) {
     if (key.daily_confirmed_cases != 0 || key.daily_deaths != 0) combo.push([date, key.daily_confirmed_cases, key.daily_deaths])
   })
 
+  drawLine(combo, 'lineCases', "Cases")
   drawCalendar(deaths, "calendarDeaths", "Deaths")
   drawCalendar(cases, "calendarCases", "Cases")
-  drawLine(combo, 'lineCases', "Cases")
 }
 
 function drawLine(data, div, param){
@@ -41,7 +41,7 @@ function drawLine(data, div, param){
 function drawCalendar(data, div, param) {
   var options = {
     // title: "Covid",
-    height: "800",
+    height: "350",
     width: "100%",
     allowHtml: true,
 

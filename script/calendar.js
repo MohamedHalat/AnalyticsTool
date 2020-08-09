@@ -36,6 +36,18 @@ function drawLine(data, div, param){
 
   var chart = new google.visualization.LineChart(document.getElementById(div));
   chart.draw(dataTable, options);
+
+  google.visualization.events.addListener(chart, "select", function () {
+    var sel = chart.getSelection();
+    if (sel.length) {
+      if (typeof sel[0].row !== "undefined") {
+        var date = new Date(data[sel[0].row][0]);
+        date.setDate(date.getDate()+1);
+        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        filter("dates", `${date.toLocaleDateString(undefined, options)}`)
+      }
+    }
+  });
 }
 
 function drawCalendar(data, div, param) {

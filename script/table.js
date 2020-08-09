@@ -25,7 +25,7 @@ function parseCovid(info) {
     if (value.deaths != 0) deaths.push([value.countries_and_territories, value.daily_deaths])
 
     locations[value.countries_and_territories] = value.country_territory_code; // regional chart location name mapper used in select
-    rows.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code, value.daily_confirmed_cases, value.daily_deaths]) //Table data
+    rows.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code, value.daily_confirmed_cases, value.daily_deaths, value.population, value.daily_deaths/value.population*100,value.daily_deaths/value.daily_confirmed_cases*100]) //Table data
   })
 
   // Create Charts
@@ -88,6 +88,9 @@ function drawLocationsTable(rows) {
   data.addColumn('string', 'Location');
   data.addColumn('number', 'Confirmed Cases');
   data.addColumn('number', 'Deaths');
+  data.addColumn('number', 'Population');
+  data.addColumn('number', 'Cases %');
+  data.addColumn('number', 'Cases/Deaths');
   data.addRows(rows);
 
   // Draw Chart

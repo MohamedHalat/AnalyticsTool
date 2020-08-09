@@ -36,7 +36,8 @@ button{
 
 @media only screen and (max-width: 900px) {
 .calendar{
-  display: none;
+  visibility: collapse;
+  display: none !important;
 }
 }
 section {

@@ -14,8 +14,11 @@ function parseDates(info) {
   })
 
   drawLine(combo, 'lineCases', "Cases")
-  drawCalendar(deaths, "calendarDeaths", "Deaths")
-  drawCalendar(cases, "calendarCases", "Cases")
+  console.log(window.innerWidth)
+  if(window.innerWidth > 900){
+    drawCalendar(deaths, "calendarDeaths", "Deaths")
+    drawCalendar(cases, "calendarCases", "Cases")
+  }
 }
 
 function drawLine(data, div, param){

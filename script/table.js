@@ -12,7 +12,7 @@ function parseCovid(info) {
   var cases = [];
 
   // Data loop
-  info.forEach(function (value) {
+  info.forEach(function (value, index) {
     // Replace certain country names
     value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
     if (value.countries_and_territories == "Cases on an international conveyance Japan") {
@@ -25,7 +25,7 @@ function parseCovid(info) {
     if (value.deaths != 0) deaths.push([value.countries_and_territories, value.daily_deaths])
 
     locations[value.countries_and_territories] = value.country_territory_code; // regional chart location name mapper used in select
-    rows.push([value.countries_and_territories.replace(/_/g, " "), value.country_territory_code, value.daily_confirmed_cases, value.daily_deaths, value.population, value.daily_deaths/value.population*100,value.daily_deaths/value.daily_confirmed_cases*100]) //Table data
+    rows.push([index+1, value.countries_and_territories.replace(/_/g, " "), value.country_territory_code, value.daily_confirmed_cases, value.daily_deaths, value.population, value.daily_deaths/value.population*100,value.daily_deaths/value.daily_confirmed_cases*100]) //Table data
   })
 
   // Create Charts
@@ -85,6 +85,7 @@ function drawCovidPie(info, param) {
 function drawLocationsTable(rows) {
   // Create Dataset
   var data = new google.visualization.DataTable();
+  data.addColumn('number', 'Pos');
   data.addColumn('string', 'Countries and territories');
   data.addColumn('string', 'Location');
   data.addColumn('number', 'Confirmed Cases');

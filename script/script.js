@@ -88,12 +88,12 @@ function getDatesJSON() {
   };
   console.log(JSON.stringify({"countries":activeFilter.locations.toString()}))
   if (activeFilter.locations){
-    xhttp.open("POST", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
+    xhttp.open("POST", "https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.send(JSON.stringify({"countries":activeFilter.locations.toString()}));
   }
   else
-  xhttp.open("GET", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
+  xhttp.open("GET", "https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
 
   xhttp.onload = function () { };
 }
@@ -109,7 +109,7 @@ function getCovidJSON() {
         parseCovid(json)
     }
   };
-  xhttp.open("POST", "https://cors-anywhere.herokuapp.com/https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
+  xhttp.open("POST", "https://us-central1-mohamed-halat.cloudfunctions.net/Covid-API", true);
   xhttp.setRequestHeader("Content-Type", "application/json");
   
   var req = {"func":true};

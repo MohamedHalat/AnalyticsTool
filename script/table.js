@@ -31,6 +31,7 @@ function parseCovid(info) {
   // Create Charts
   drawCovidPie(deaths, "Deaths");
   drawCovidPie(cases, "Cases");
+  viewPieChart('pieCases')
   drawRegionsMap(cases, locations);
   drawLocationsTable(rows)
 }
@@ -49,7 +50,7 @@ function drawCovidPie(info, param) {
   data.addColumn('number', param);
   info.sort((a, b) => b[1] - a[1])
   data.addRows(info.slice(0, 20));
-
+  console.log(info)
   // Set options for piechart and draw
   var options = {
     width: 400,

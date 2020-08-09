@@ -34,6 +34,11 @@ button{
   }
 }
 
+@media only screen and (max-width: 900px) {
+.calendar{
+  display: none;
+}
+}
 section {
     overflow: hidden;
   }

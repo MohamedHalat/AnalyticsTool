@@ -113,7 +113,7 @@ function drawLocationsTable(rows) {
   google.visualization.events.addListener(table, "select", function () {
     var sel = table.getSelection();
     if (sel.length && typeof sel[0].row !== "undefined")
-      filter("locations", data.getValue(sel[0].row, 1));
+      filter("locations", data.getValue(sel[0].row, 2));
   });
 }
 

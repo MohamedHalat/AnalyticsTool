@@ -15,10 +15,6 @@ function parseCovid(info) {
   info.forEach(function (value, index) {
     // Replace certain country names
     value.countries_and_territories = value.countries_and_territories.replace(/_/g, " ")
-    if (value.countries_and_territories == "Cases on an international conveyance Japan") {
-      value.countries_and_territories = "Japan"
-      value.country_territory_code = "JAP"
-    }
     if (value.countries_and_territories == "United States of America") value.countries_and_territories = "United States"
     // Pie, bar and regional chart data
     if (value.cases != 0) cases.push([value.countries_and_territories.replace(/_/g, " "), value.daily_confirmed_cases])
